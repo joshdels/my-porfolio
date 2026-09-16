@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Inter:wght@400;500&display=swap");
+
+@import url("container.css");
+@import url("navbar.css");
+@import url("footer.css");
+@import url("sections/hero.css");
+@import url("sections/about.css");
+@import url("sections/projects.css");
+
+:root {
+  --color-bg: #f2f5ee;
+  --color-bg-soft: #d4ddca;
+  --color-surface: #ffffff;
+  --color-green: #7e9b6e;
+  --color-green-dark: #2c3825;
+  --color-green-deep: #0f130e;
+  --color-rust: #c0512a;
+  --color-orange: #f09371;
+  --color-text: #2c3825;
+  --color-text-muted: #7e9b6e;
+  --color-text-light: #d4ddca;
+  --color-border: #d4ddca;
+
+  --font-heading: "Lora", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Courier New", monospace;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+* {
+  box-sizing: border-box;
+}
