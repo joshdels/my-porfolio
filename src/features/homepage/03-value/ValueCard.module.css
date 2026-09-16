@@ -1,7 +1,0 @@
-.card {
-  border: 1px solid var(--color-bg);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 2rem;
-}

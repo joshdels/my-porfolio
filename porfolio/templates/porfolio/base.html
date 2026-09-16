@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}
+                Portfolio
+            {% endblock %}
+        </title>
+        <meta name="description"
+              content="{% block meta_description %}Personal portfolio and selected work.{% endblock %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="site-nav">
+                <a href="/" class="site-logo">Portfolio</a>
+                <div class="site-nav-links">
+                    <a href="/">Home</a>
+                    <a href="/projects/">Projects</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                </div>
+            </nav>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="site-footer">
+            <p>© {% now "Y" %} Portfolio</p>
+        </footer>
+        <script src="{% static 'js/main.js' %}"></script>
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

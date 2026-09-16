@@ -1,0 +1,116 @@
+{% extends "porfolio/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}
+    {{ page.title }} | Portfolio
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+
+        <p class="eyebrow">GIS • Software Development • GeoAI</p>
+
+        <h1>{{ page.title }}</h1>
+
+        <p class="hero-description">
+            Building practical software and geospatial solutions
+            for land management, infrastructure, and planning.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/projects/" class="button">
+                View Projects
+            </a>
+
+            <a href="/about/" class="button button-secondary">
+                About Me
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<section class="selected-projects">
+
+    <div class="section-header">
+        <p class="eyebrow">Selected Work</p>
+        <h2>Projects</h2>
+    </div>
+
+    <div class="project-grid">
+
+        {% for project in selected_projects %}
+
+            <article class="project-card">
+
+                {% with image=project.project_images.first %}
+
+                    {% if image %}
+
+                        {% image image.image fill-1200x800 as project_image %}
+
+                        <a href="{{ project.url }}" class="project-card-image">
+                            <img
+                                src="{{ project_image.url }}"
+                                alt="{{ image.caption|default:project.title }}"
+                            >
+                        </a>
+
+                    {% endif %}
+
+                {% endwith %}
+
+                <div class="project-card-content">
+
+                    <div class="project-card-meta">
+
+                        {% if project.year %}
+                            <span>{{ project.year }}</span>
+                        {% endif %}
+
+                        {% for project_type in project.project_types.all %}
+                            <span>{{ project_type.name }}</span>
+                        {% endfor %}
+
+                    </div>
+
+                    <h3>
+                        <a href="{{ project.url }}">
+                            {{ project.title }}
+                        </a>
+                    </h3>
+
+                    {% if project.description %}
+                        <p>{{ project.description }}</p>
+                    {% endif %}
+
+                    <a
+                        href="{{ project.url }}"
+                        class="project-card-link"
+                    >
+                        View Project →
+                    </a>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <p>Projects coming soon.</p>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="section-action">
+        <a href="/projects/" class="button button-secondary">
+            View All Projects
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}
