@@ -4,10 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
+from porfolio import urls as porfolio_urls
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
+    path("", include(porfolio_urls)),
     path("", include(wagtail_urls)),
 ]
 

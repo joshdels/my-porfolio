@@ -1,18 +1,16 @@
 from django.db import models
 
 from modelcluster.fields import ParentalKey
-from wagtail.admin.panels import FieldPanel, InlinePanel
+
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultipleChooserPanel
 from wagtail.fields import RichTextField
 from wagtail.models import Orderable, Page
+from wagtail.snippets.models import register_snippet
 
 
+@register_snippet
 class ProjectType(models.Model):
     name = models.CharField(
-        max_length=100,
-        unique=True,
-    )
-
-    slug = models.SlugField(
         max_length=100,
         unique=True,
     )
@@ -26,13 +24,9 @@ class ProjectType(models.Model):
         return self.name
 
 
+@register_snippet
 class Tool(models.Model):
     name = models.CharField(
-        max_length=100,
-        unique=True,
-    )
-
-    slug = models.SlugField(
         max_length=100,
         unique=True,
     )
@@ -64,32 +58,66 @@ class ProjectsIndexPage(Page):
     def get_context(self, request):
         context = super().get_context(request)
 
-        context["projects"] = (
-            self.get_children()
-            .live()
-            .public()
-            .specific()
-            .order_by("-first_published_at")
-        )
+        project_type = request.GET.get("type")
+
+        projects = Project.objects.child_of(self).live().public().order_by("-date")
+
+        if project_type:
+            projects = projects.filter(
+                project_type_items__project_type__id=project_type
+            ).distinct()
+
+        context["selected_projects"] = projects.filter(selected=True)
+        context["projects"] = projects.filter(selected=False)
+        context["project_types"] = ProjectType.objects.all()
+        context["active_type"] = project_type
 
         return context
+
+
+class ProjectProjectType(Orderable):
+    project = ParentalKey(
+        "Project",
+        on_delete=models.CASCADE,
+        related_name="project_type_items",
+    )
+    project_type = models.ForeignKey(
+        ProjectType,
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
+
+    panels = [
+        FieldPanel("project_type"),
+    ]
+
+    def __str__(self):
+        return str(self.project_type)
+
+
+class ProjectTool(Orderable):
+    project = ParentalKey(
+        "Project",
+        on_delete=models.CASCADE,
+        related_name="tool_items",
+    )
+    tool = models.ForeignKey(
+        Tool,
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
+
+    panels = [
+        FieldPanel("tool"),
+    ]
+
+    def __str__(self):
+        return str(self.tool)
 
 
 class Project(Page):
     description = models.TextField(
         help_text="Short description shown on project cards.",
-    )
-
-    project_types = models.ManyToManyField(
-        ProjectType,
-        blank=True,
-        related_name="projects",
-    )
-
-    tools = models.ManyToManyField(
-        Tool,
-        blank=True,
-        related_name="projects",
     )
 
     client = models.CharField(
@@ -102,7 +130,7 @@ class Project(Page):
         blank=True,
     )
 
-    year = models.PositiveIntegerField(
+    date = models.DateField(
         null=True,
         blank=True,
     )
@@ -123,11 +151,19 @@ class Project(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel("description"),
-        FieldPanel("project_types"),
-        FieldPanel("tools"),
+        MultipleChooserPanel(
+            "project_type_items",
+            label="Project Types",
+            chooser_field_name="project_type",
+        ),
+        MultipleChooserPanel(
+            "tool_items",
+            label="Tools",
+            chooser_field_name="tool",
+        ),
         FieldPanel("client"),
         FieldPanel("location"),
-        FieldPanel("year"),
+        FieldPanel("date"),
         FieldPanel("content"),
         FieldPanel("featured"),
         FieldPanel("selected"),
@@ -163,6 +199,18 @@ class Project(Page):
 
     def __str__(self):
         return self.title
+
+    @property
+    def project_types(self):
+        return ProjectType.objects.filter(
+            pk__in=self.project_type_items.values_list("project_type_id", flat=True)
+        )
+
+    @property
+    def tools(self):
+        return Tool.objects.filter(
+            pk__in=self.tool_items.values_list("tool_id", flat=True)
+        )
 
 
 class ProjectImage(Orderable):
