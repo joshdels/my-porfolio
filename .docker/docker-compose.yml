@@ -18,13 +18,9 @@ services:
       - "127.0.0.1:8007:8000"
 
     networks:
-      - default
       - gis_centralize_db
 
 networks:
-  default:
-    name: docker_default
-
   gis_centralize_db:
     external: true
     name: gis_centralize_db
