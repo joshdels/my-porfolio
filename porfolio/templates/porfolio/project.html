@@ -1,13 +1,9 @@
 {% extends "porfolio/base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-{% block title %}
-    {{ page.title }} | Portfolio
-{% endblock %}
-{% block meta_description %}
-    {{ page.description }}
-{% endblock %}
+{% block title %} {{ page.title }} | Portfolio{% endblock %}
+{% block meta_description %} {{ page.description }} {% endblock %}
 {% block content %}
-    <article class="project-detail">
+    <article class="container container-section project-detail">
         <header class="project-detail-header">
             <div class="project-detail-meta">
                 {% if page.year %}

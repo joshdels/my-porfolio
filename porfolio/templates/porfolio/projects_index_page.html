@@ -4,58 +4,60 @@
     {{ page.title }} | Portfolio
 {% endblock %}
 {% block content %}
-    <section class="projects-header">
-        <p class="eyebrow">Portfolio</p>
-        <h1>{{ page.title }}</h1>
-        {% if page.intro %}
-            <div class="projects-intro">{{ page.intro|richtext }}</div>
-        {% endif %}
-    </section>
-    <section class="projects-list">
-        <div class="project-grid">
-            {% for project in projects %}
-                <article class="project-card">
-                    {% with image=project.project_images.first %}
-                        {% if image %}
-                            {% image image.image fill-1200x800 as project_image %}
-                            <a href="{{ project.url }}" class="project-card-image">
-                                <img src="{{ project_image.url }}"
-                                     alt="{{ image.caption|default:project.title }}"
-                                     loading="lazy">
-                            </a>
-                        {% endif %}
-                    {% endwith %}
-                    <div class="project-card-content">
-                        <div class="project-card-meta">
-                            {% if project.year %}
-                                <span>{{ project.year }}</span>
+    <div class="container container-section">
+        <section class="projects-header">
+            <p class="eyebrow">Portfolio</p>
+            <h1>{{ page.title }}</h1>
+            {% if page.intro %}
+                <div class="projects-intro">{{ page.intro|richtext }}</div>
+            {% endif %}
+        </section>
+        <section class="projects-list">
+            <div class="project-grid">
+                {% for project in projects %}
+                    <article class="project-card">
+                        {% with image=project.project_images.first %}
+                            {% if image %}
+                                {% image image.image fill-1200x800 as project_image %}
+                                <a href="{{ project.url }}" class="project-card-image">
+                                    <img src="{{ project_image.url }}"
+                                        alt="{{ image.caption|default:project.title }}"
+                                        loading="lazy">
+                                </a>
                             {% endif %}
-                            {% for project_type in project.project_types.all %}
-                                <span>{{ project_type.name }}</span>
-                            {% endfor %}
-                        </div>
-                        <h2>
-                            <a href="{{ project.url }}">{{ project.title }}</a>
-                        </h2>
-                        {% if project.description %}
-                            <p>{{ project.description }}</p>
-                        {% endif %}
-                        {% if project.tools.all %}
-                            <div class="project-tools">
-                                {% for tool in project.tools.all %}
-                                    <span>{{ tool.name }}</span>
+                        {% endwith %}
+                        <div class="project-card-content">
+                            <div class="project-card-meta">
+                                {% if project.year %}
+                                    <span>{{ project.year }}</span>
+                                {% endif %}
+                                {% for project_type in project.project_types.all %}
+                                    <span>{{ project_type.name }}</span>
                                 {% endfor %}
                             </div>
-                        {% endif %}
-                        <a href="{{ project.url }}" class="project-card-link">View Project →</a>
+                            <h2>
+                                <a href="{{ project.url }}">{{ project.title }}</a>
+                            </h2>
+                            {% if project.description %}
+                                <p>{{ project.description }}</p>
+                            {% endif %}
+                            {% if project.tools.all %}
+                                <div class="project-tools">
+                                    {% for tool in project.tools.all %}
+                                        <span>{{ tool.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <a href="{{ project.url }}" class="project-card-link">View Project →</a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-state">
+                        <h2>No projects yet.</h2>
+                        <p>Projects will appear here once they are published.</p>
                     </div>
-                </article>
-            {% empty %}
-                <div class="empty-state">
-                    <h2>No projects yet.</h2>
-                    <p>Projects will appear here once they are published.</p>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
 {% endblock %}

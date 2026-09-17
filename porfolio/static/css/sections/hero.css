@@ -1,4 +1,31 @@
 #hero {
   background-color: var(--color-green-dark);
   color: var(--color-text-light);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#hero h1 {
+  font-family: var(--font-heading);
+  font-size: 5rem;
+  font-weight: 900;
+}
+
+#hero p {
+  font-size: 1.4rem;
+  max-width: 800px;
+  text-align: center;
+}
+
+#hero .button-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
 }

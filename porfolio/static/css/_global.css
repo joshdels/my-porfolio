@@ -6,19 +6,21 @@
 @import url("sections/hero.css");
 @import url("sections/about.css");
 @import url("sections/projects.css");
+@import url("components/buttons.css");
 
 :root {
   --color-bg: #f2f5ee;
   --color-bg-soft: #d4ddca;
   --color-surface: #ffffff;
   --color-green: #7e9b6e;
-  --color-green-dark: #2c3825;
+  --color-green-dark: #003C3E;
   --color-green-deep: #0f130e;
-  --color-rust: #c0512a;
-  --color-orange: #f09371;
+  --color-rust: #DF6859;
+  --color-orange: #FDC2A3;
   --color-text: #2c3825;
-  --color-text-muted: #7e9b6e;
-  --color-text-light: #d4ddca;
+  --color-text-muted: #999999;
+  --color-text-muted-dark: #2b2a2a;
+  --color-text-light: #F5F0EB;
   --color-border: #d4ddca;
 
   --font-heading: "Lora", Georgia, serif;
