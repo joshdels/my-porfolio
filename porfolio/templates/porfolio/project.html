@@ -1,0 +1,132 @@
+{% extends "porfolio/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block title %} {{ page.title }} | Portfolio{% endblock %}
+{% block meta_description %} {{ page.description }} {% endblock %}
+{% block content %}
+    <article class="container container-section project-detail">
+        <header class="project-detail-header">
+            <div class="project-detail-meta">
+                {% if page.year %}
+                    <span>{{ page.year }}</span>
+                {% endif %}
+                {% for project_type in page.project_types.all %}
+                    <span>{{ project_type.name }}</span>
+                {% endfor %}
+            </div>
+            <h1>{{ page.title }}</h1>
+            {% if page.description %}
+                <p class="project-detail-description">{{ page.description }}</p>
+            {% endif %}
+            <div class="project-information">
+                {% if page.client %}
+                    <div>
+                        <span class="label">Client</span>
+                        <span>{{ page.client }}</span>
+                    </div>
+                {% endif %}
+                {% if page.location %}
+                    <div>
+                        <span class="label">Location</span>
+                        <span>{{ page.location }}</span>
+                    </div>
+                {% endif %}
+                {% if page.year %}
+                    <div>
+                        <span class="label">Year</span>
+                        <span>{{ page.year }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        </header>
+        {% if page.project_images.all %}
+            <section class="project-gallery">
+                {% for item in page.project_images.all %}
+                    <figure class="project-image">
+                        {% image item.image width-1600 as project_image %}
+                        <img src="{{ project_image.url }}"
+                             alt="{{ item.caption|default:page.title }}"
+                             loading="lazy">
+                        {% if item.caption %}
+                            <figcaption>{{ item.caption }}</figcaption>
+                        {% endif %}
+                    </figure>
+                {% endfor %}
+            </section>
+        {% endif %}
+        {% if page.content %}
+            <section class="project-content">
+                {{ page.content|richtext }}
+            </section>
+        {% endif %}
+        {% if page.tools.all %}
+            <section class="project-section">
+                <header class="section-header">
+                    <p class="eyebrow">Technologies</p>
+                    <h2>Tools & Technologies</h2>
+                </header>
+                <div class="project-tools">
+                    {% for tool in page.tools.all %}
+                        <span>{{ tool.name }}</span>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+        {% if page.videos.all %}
+            <section class="project-section">
+                <header class="section-header">
+                    <p class="eyebrow">Demonstration</p>
+                    <h2>Videos</h2>
+                </header>
+                <div class="project-videos">
+                    {% for video in page.videos.all %}
+                        <div class="project-video">
+                            {% if video.title %}
+                                <h3>{{ video.title }}</h3>
+                            {% endif %}
+                            <a href="{{ video.url }}" target="_blank" rel="noopener noreferrer">Watch Video →</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+        {% if page.links.all %}
+            <section class="project-section">
+                <header class="section-header">
+                    <p class="eyebrow">Resources</p>
+                    <h2>Links</h2>
+                </header>
+                <div class="project-links">
+                    {% for link in page.links.all %}
+                        <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.title }} →</a>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+        {% if page.quotes.all %}
+            <section class="project-section">
+                <header class="section-header">
+                    <p class="eyebrow">Testimonial</p>
+                    <h2>What They Said</h2>
+                </header>
+                <div class="project-quotes">
+                    {% for quote in page.quotes.all %}
+                        <blockquote>
+                            <p>"{{ quote.quote }}"</p>
+                            {% if quote.author %}
+                                <footer>
+                                    <strong>{{ quote.author }}</strong>
+                                    {% if quote.role %}
+                                        <span>{{ quote.role }}</span>
+                                    {% endif %}
+                                </footer>
+                            {% endif %}
+                        </blockquote>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+        <footer class="project-detail-footer">
+            <a href="/projects/">← Back to Projects</a>
+        </footer>
+    </article>
+{% endblock %}
