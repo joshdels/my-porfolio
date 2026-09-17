@@ -6,26 +6,71 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  text-align: center;
 }
 
 #hero h1 {
   font-family: var(--font-heading);
-  font-size: 5rem;
+  font-size: clamp(4rem, 10vw, 10rem);
   font-weight: 900;
+  color: var(--color-rust);
+  margin: 0 auto;
 }
 
 #hero p {
   font-size: 1.4rem;
-  max-width: 800px;
+  max-width: 1000px;
   text-align: center;
+  letter-spacing: 5px;
+  line-height: 35px;
+}
+
+#hero span {
+  color: var(--color-orange);
 }
 
 #hero .button-section {
-  margin-top: 2rem;
+  margin: 2rem auto 0;
+
   display: flex;
   flex-direction: row;
   gap: 1rem;
+
   align-items: center;
   justify-content: center;
-  width: fit-content;
+}
+
+@media (max-width: 768px) {
+  #hero {
+    padding: 3rem 1.5rem;
+  }
+
+  #hero h1 {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+  }
+
+  #hero p {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    line-height: 25px;
+    max-width: 600px;
+  }
+
+  #hero span {
+    font-size: 0.9rem;
+    line-height: 24px;
+  }
+
+  #hero .button-section {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  #hero .button-section .btn {
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+  }
 }

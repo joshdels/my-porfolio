@@ -1,7 +1,6 @@
 .btn {
   padding: 0.8rem 1.8rem;
   text-decoration: none;
-  align-self: flex-start;
 }
 
 .btn-primary {
@@ -23,11 +22,16 @@
 .btn-line-primary {
   color: var(--color-text-light);
   border-bottom: 1px solid var(--color-text-light);
-  padding: 0.2rem 0rem;
+  padding: 0.2rem 0;
   transition: all 0.2s ease-in-out;
 }
 
 .btn-line-primary:hover {
   color: var(--color-orange);
   border-bottom: 1px solid var(--color-orange);
+}
+
+.btn-outline-round {
+  border-radius: 5rem;
+  border: 1px solid var(--color-green-dark);
 }

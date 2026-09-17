@@ -1,9 +1,10 @@
 .container {
-  padding: 4rem;
+  padding: clamp(2rem, 5vw, 4rem);
 }
 
 .container-section {
   min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +20,6 @@
   min-height: 100vh;
 
   margin: 0 auto;
-
   align-items: center;
 }
 
@@ -31,10 +31,20 @@
   margin: 0 auto;
 }
 
+
 @media (max-width: 768px) {
+  .container {
+    padding: 3rem 1.5rem;
+  }
+
+  .container-section {
+    min-height: 100svh;
+  }
+
   .container-two-columns {
     grid-template-columns: 1fr;
     gap: 2rem;
+    min-height: auto;
   }
 
   .container-two-columns img {

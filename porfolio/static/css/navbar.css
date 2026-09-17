@@ -2,5 +2,48 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem 5rem;
+
+  margin: 1rem clamp(1.5rem, 5vw, 5rem);
+}
+
+nav .title {
+  text-decoration: none;
+  font-family: var(--font-heading);
+  color: var(--color-text-muted-dark);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+}
+
+nav section {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+nav section a {
+  text-decoration: none;
+  color: var(--color-green-deep);
+}
+
+@media (max-width: 768px) {
+  nav {
+    margin: 1rem 1.5rem;
+  }
+
+  nav .title {
+    font-size: 2rem;
+  }
+
+  nav section {
+    gap: 0;
+  }
+
+  nav section a {
+    display: none;
+  }
+
+  nav section a:last-child {
+    display: block;
+  }
 }
