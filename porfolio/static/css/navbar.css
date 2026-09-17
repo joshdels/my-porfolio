@@ -2,7 +2,6 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   margin: 1rem clamp(1.5rem, 5vw, 5rem);
 }
 
@@ -23,7 +22,7 @@ nav section {
 
 nav section a {
   text-decoration: none;
-  color: var(--color-green-deep);
+  color: var(--color-text-muted-dark);
 }
 
 @media (max-width: 768px) {
