@@ -65,6 +65,7 @@ STORAGES = {
 
 
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = f"{os.environ['B2_ENDPOINT_URL']}/" f"{os.environ['B2_BUCKET_NAME']}/media/"
 
