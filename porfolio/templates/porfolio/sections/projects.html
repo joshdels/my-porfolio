@@ -1,79 +1,41 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-
-<section class="container container-section">
+<section id="projects" class="container container-section">
     <div class="section-header">
-        <p class="eyebrow">Selected Work</p>
-        <h2>Projects</h2>
+        <span>Projects</span>
+        <h1>Selected Works</h1>
     </div>
-
     <div class="project-grid">
-
         {% for project in selected_projects %}
-            <article class="project-card">
-
+            <a class="project-card" href="{{ project.url }}">
                 {% with image=project.project_images.first %}
-
                     {% if image %}
-
                         {% image image.image fill-1200x800 as project_image %}
-
-                        <a href="{{ project.url }}" class="project-card-image">
-                            <img
-                                src="{{ project_image.url }}"
-                                alt="{{ image.caption|default:project.title }}"
-                            >
-                        </a>
-
+                        <div class="project-card-image">
+                            <img src="{{ project_image.url }}"
+                                 alt="{{ image.caption|default:project.title }}">
+                        </div>
                     {% endif %}
-
                 {% endwith %}
-
                 <div class="project-card-content">
-
                     <div class="project-card-meta">
-
                         {% if project.year %}
-                            <span>{{ project.year }}</span>
+                            <span class="date">{{ project.year }}</span>
                         {% endif %}
-
                         {% for project_type in project.project_types.all %}
                             <span>{{ project_type.name }}</span>
                         {% endfor %}
-
                     </div>
-
-                    <h3>
-                        <a href="{{ project.url }}">
-                            {{ project.title }}
-                        </a>
-                    </h3>
-
+                    <h2>{{ project.title }}</h2>
                     {% if project.description %}
                         <p>{{ project.description }}</p>
                     {% endif %}
-
-                    <a
-                        href="{{ project.url }}"
-                        class="project-card-link"
-                    >
-                        View Project →
-                    </a>
-
                 </div>
-
-            </article>
-
+            </a>
         {% empty %}
-
             <p>Projects coming soon.</p>
-
         {% endfor %}
-
     </div>
-
     <div class="section-action">
-        <a href="/projects/" class="button button-secondary">
-            View All Projects
-        </a>
+        <a href="/projects/" class="btn btn-line-black">View All Projects</a>
     </div>
 </section>
