@@ -4,17 +4,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            {% block title %}Portfolio{% endblock %}
-        </title>
-        <meta name="description" content="{% block meta_description %}Personal portfolio and selected work.{% endblock %}">
+        <title>{% block title %}Portfolio{% endblock %}</title>
+        <meta name="description"
+              content="{% block meta_description %}Personal portfolio and selected work.{% endblock %}">
         <link rel="stylesheet" href="{% static 'css/_global.css' %}">
-        {% block extra_link %}{% endblock extra_link %}
+        {% block extra_link %}
+        {% endblock extra_link %}
     </head>
     <body>
         {% include "porfolio/components/navbar.html" %}
-        {% block content %}{% endblock content %}
-        {% include "porfolio/components/footer.html"%}
-        {% block scripts %} {% endblock scripts %}
+        {% block content %}
+        {% endblock content %}
+        {% include "porfolio/components/footer.html" %}
+        {% block scripts %}
+        {% endblock scripts %}
     </body>
 </html>

@@ -21,8 +21,8 @@
                                 {% image image.image fill-1200x800 as project_image %}
                                 <a href="{{ project.url }}" class="project-card-image">
                                     <img src="{{ project_image.url }}"
-                                        alt="{{ image.caption|default:project.title }}"
-                                        loading="lazy">
+                                         alt="{{ image.caption|default:project.title }}"
+                                         loading="lazy">
                                 </a>
                             {% endif %}
                         {% endwith %}

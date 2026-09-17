@@ -9,18 +9,18 @@
 @import url("components/buttons.css");
 
 :root {
-  --color-bg: #f2f5ee;
+  --color-bg: #eff0ee;
   --color-bg-soft: #d4ddca;
   --color-surface: #ffffff;
   --color-green: #7e9b6e;
-  --color-green-dark: #003C3E;
+  --color-green-dark: #003c3e;
   --color-green-deep: #0f130e;
-  --color-rust: #DF6859;
-  --color-orange: #FDC2A3;
-  --color-text: #2c3825;
+  --color-rust: #df6859;
+  --color-orange: #fdc2a3;
+  --color-text: #000000;
   --color-text-muted: #999999;
   --color-text-muted-dark: #2b2a2a;
-  --color-text-light: #F5F0EB;
+  --color-text-light: #f5f0eb;
   --color-border: #d4ddca;
 
   --font-heading: "Lora", Georgia, serif;
@@ -39,4 +39,11 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1.1;
+  margin: 0 auto;
+  font-family: var(--font-heading);
 }
