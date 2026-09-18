@@ -17,7 +17,7 @@ def custom_404(request, exception):
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
-    path("", include(porfolio_urls)),
+    path("guest/", include(porfolio_urls)),
     path("", include(wagtail_urls)),
 ]
 
