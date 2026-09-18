@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
@@ -20,8 +21,8 @@ def contact(request):
                     f"Industry: {inquiry.get_industry_display()}\n\n"
                     f"Inquiry:\n{inquiry.inquiry}"
                 ),
-                from_email="joshdels@topmapsolutions.com",
-                to=["joshdels@topmapsolutions.com"],
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[settings.DEFAULT_FROM_EMAIL],
                 reply_to=[inquiry.email],
             )
 
@@ -33,12 +34,12 @@ def contact(request):
                     f"Hi {inquiry.name},\n\n"
                     "Thanks for reaching out through my portfolio.\n\n"
                     "I've received your inquiry and will get back to you "
-                    "as soon as I can.\n\n\n"
+                    "as soon as I can.\n\n"
                     "Best regards,\n"
                     "Joshua De Leon\n"
                     "GIS Software Developer"
                 ),
-                from_email="joshdels@topmapsolutions.com",
+                from_email=settings.DEFAULT_FROM_EMAIL,
                 to=[inquiry.email],
             )
 
