@@ -17,7 +17,6 @@ jobs:
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.5
-
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
@@ -25,24 +24,26 @@ jobs:
           port: 22
           timeout: 30m
           command_timeout: 30m
-
           script: |
             set -e
 
             cd ~/myapps/my-portfolio
 
             echo "--- Updating Repository ---"
-
             git fetch origin main
             git reset --hard origin/main
 
-            echo "--- Building and Starting My Portfolio ---"
+            echo "--- Stopping Containers ---"
+            docker-compose -f .docker/docker-compose.yml down
 
+            echo "--- Building Fresh (no cache) ---"
             export DOCKER_BUILDKIT=1
+            docker-compose -f .docker/docker-compose.yml build --no-cache
 
-            echo "--- Building and Starting My Portfolio ---"
-            
-            docker-compose -f .docker/docker-compose.yml up -d --build
+            echo "--- Starting Containers ---"
+            docker-compose -f .docker/docker-compose.yml up -d
+
+            echo "--- Cleaning Up ---"
             docker image prune -f
 
             echo "--- My Portfolio Deployment Complete ---"
