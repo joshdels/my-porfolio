@@ -20,6 +20,7 @@ jobs:
       - name: Build Docker image
         run: |
           echo "--- Building Docker image ---"
+
           docker build \
             -f .docker/Dockerfile \
             -t my-portfolio:latest \

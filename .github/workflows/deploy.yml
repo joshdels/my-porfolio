@@ -32,16 +32,14 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
+            echo "--- Building and Starting My Portfolio ---"
             export DOCKER_BUILDKIT=1
 
-            echo "--- Building and Starting My Portfolio ---"
             docker compose \
               -f .docker/docker-compose.yml \
               up -d --build
 
-            echo "--- Cleaning Unused Docker Resources ---"
+            echo "--- Cleaning Unused Docker Images ---"
             docker image prune -f
-            docker container prune -f
-            docker volume prune -f
 
             echo "--- My Portfolio Deployment Complete ---"
