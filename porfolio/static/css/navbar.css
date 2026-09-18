@@ -8,9 +8,14 @@ nav {
 nav .title {
   text-decoration: none;
   font-family: var(--font-heading);
-  color: var(--color-text-muted-dark);
+  color: var(--color-text);
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+nav .title:hover {
+  opacity: 0.7;
 }
 
 nav section {
@@ -22,7 +27,12 @@ nav section {
 
 nav section a {
   text-decoration: none;
-  color: var(--color-text-muted-dark);
+  color: var(--color-text);
+  transition: opacity 0.2s ease;
+}
+
+nav section a:hover {
+  opacity: 0.7;
 }
 
 @media (max-width: 768px) {

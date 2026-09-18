@@ -8,6 +8,7 @@ dependencies = [
     "boto3>=1.43.96",
     "django>=6.1.1",
     "django-storages>=1.14.6",
+    "dotenv>=0.9.9",
     "gunicorn>=26.2.0",
     "psycopg[binary]>=3.3.5",
     "wagtail>=8.0",

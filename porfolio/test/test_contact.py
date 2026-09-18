@@ -8,6 +8,7 @@ from porfolio.models import ContactInquiry
 
 
 class ContactInquiryFormTests(TestCase):
+
     def test_valid_contact_form(self):
         form = ContactInquiryForm(
             {
@@ -41,10 +42,12 @@ class ContactInquiryFormTests(TestCase):
 
 
 class ContactViewTests(TestCase):
+
     def test_contact_page_loads(self):
         response = self.client.get(reverse("contact"))
 
         self.assertEqual(response.status_code, 200)
+
         self.assertIsInstance(
             response.context["form"],
             ContactInquiryForm,
@@ -64,9 +67,11 @@ class ContactViewTests(TestCase):
             },
         )
 
+        # Redirect after successful submission
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse("contact"))
 
+        # Inquiry is saved
         self.assertEqual(
             ContactInquiry.objects.count(),
             1,
@@ -78,4 +83,20 @@ class ContactViewTests(TestCase):
         self.assertEqual(inquiry.email, "test@example.com")
         self.assertEqual(inquiry.industry, "other")
 
-        mock_send.assert_called_once()
+        # Two emails should be sent:
+        # 1. Notification to Joshua
+        # 2. Confirmation to the visitor
+        self.assertEqual(mock_send.call_count, 2)
+
+        notification_email = mock_send.call_args_list[0][0]
+        confirmation_email = mock_send.call_args_list[1][0]
+
+        self.assertEqual(
+            notification_email,
+            (),
+        )
+
+        self.assertEqual(
+            confirmation_email,
+            (),
+        )

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
@@ -13,7 +12,7 @@ def contact(request):
         if form.is_valid():
             inquiry = form.save()
 
-            email = EmailMessage(
+            notification_email = EmailMessage(
                 subject=f"New portfolio inquiry from {inquiry.name}",
                 body=(
                     f"Name: {inquiry.name}\n"
@@ -21,12 +20,29 @@ def contact(request):
                     f"Industry: {inquiry.get_industry_display()}\n\n"
                     f"Inquiry:\n{inquiry.inquiry}"
                 ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[settings.DEFAULT_FROM_EMAIL],
+                from_email="joshdels@topmapsolutions.com",
+                to=["joshdels@topmapsolutions.com"],
                 reply_to=[inquiry.email],
             )
 
-            email.send()
+            notification_email.send(fail_silently=False)
+
+            confirmation_email = EmailMessage(
+                subject="Thanks for reaching out",
+                body=(
+                    f"Hi {inquiry.name},\n\n"
+                    "Thanks for reaching out through my portfolio.\n\n"
+                    "I've received your inquiry and will get back to you "
+                    "as soon as I can.\n\n\n"
+                    "Best regards,\n"
+                    "Joshua De Leon\n"
+                    "GIS Software Developer"
+                ),
+                from_email="joshdels@topmapsolutions.com",
+                to=[inquiry.email],
+            )
+
+            confirmation_email.send(fail_silently=False)
 
             messages.success(
                 request,

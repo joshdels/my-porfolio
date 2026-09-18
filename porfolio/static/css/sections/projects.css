@@ -124,6 +124,14 @@
   padding: 2rem;
 }
 
+#projects .section-action a {
+  transition: all 0.2s ease-in-out;
+}
+
+#projects .section-action a:hover {
+  color: var(--color-rust);
+}
+
 @media (max-width: 900px) {
   #projects .project-grid {
     grid-template-columns: repeat(2, 1fr);
