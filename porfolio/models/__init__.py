@@ -1,10 +1,3 @@
-from .home import HomePage
-from .projects import (
-    Project,
-    ProjectImage,
-    ProjectLink,
-    ProjectQuote,
-    ProjectType,
-    ProjectVideo,
-    ProjectsIndexPage,
-)
+from .home import *
+from .projects import *
+from .contact import *

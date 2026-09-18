@@ -1,0 +1,30 @@
+name: Build My Portfolio
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          echo "--- Building Docker image ---"
+          docker build \
+            -f .docker/Dockerfile \
+            -t my-portfolio:latest \
+            .
+
+      - name: Build Complete
+        run: |
+          echo "--- My Portfolio Build Complete ---"

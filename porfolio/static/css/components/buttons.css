@@ -1,10 +1,32 @@
 .btn {
+  display: inline-block;
   padding: 0.8rem 1.8rem;
+
+  border: 0;
+  border-radius: 0;
+
+  background: none;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+
   text-decoration: none;
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .btn-primary {
   background-color: var(--color-green-dark);
+  color: var(--color-text-light);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-rust);
   color: var(--color-text-light);
 }
 

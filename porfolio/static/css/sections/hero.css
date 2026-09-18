@@ -22,8 +22,9 @@
   font-size: 1.4rem;
   max-width: 1000px;
   text-align: center;
-  letter-spacing: 5px;
-  line-height: 35px;
+  letter-spacing: 3px;
+  word-spacing: 5px;
+  line-height: 40px;
 }
 
 #hero span {
