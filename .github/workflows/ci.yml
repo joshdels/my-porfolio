@@ -1,0 +1,111 @@
+name: CI/CD My Portfolio
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  test:
+    name: Test Django
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image for tests
+        run: |
+          echo "--- Building Docker image for tests ---"
+
+          docker build \
+            -f .docker/Dockerfile \
+            -t my-portfolio-test:latest \
+            .
+
+      - name: Run Django tests
+        run: |
+          echo "--- Running Django tests ---"
+
+          docker run --rm \
+            -e DJANGO_SETTINGS_MODULE=config.settings.test \
+            my-portfolio-test:latest \
+            uv run python manage.py test porfolio
+
+      - name: Tests Complete
+        run: |
+          echo "--- All Django tests passed ---"
+
+
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          echo "--- Building production Docker image ---"
+
+          docker build \
+            -f .docker/Dockerfile \
+            -t my-portfolio:latest \
+            .
+
+      - name: Build Complete
+        run: |
+          echo "--- Docker build completed successfully ---"
+
+
+  deploy:
+    name: Deploy to Vultr
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.5
+
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+
+          timeout: 30m
+          command_timeout: 30m
+
+          script: |
+            set -e
+
+            echo "--- Entering project directory ---"
+            cd ~/myapps/my-portfolio
+
+            echo "--- Updating Repository ---"
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "--- Building and Starting Containers ---"
+            export DOCKER_BUILDKIT=1
+
+            docker-compose \
+              -f .docker/docker-compose.yml \
+              up -d \
+              --build
+
+            echo "--- Cleaning Up Old Docker Images ---"
+            docker image prune -f
+
+            echo "--- My Portfolio Deployment Complete ---"
