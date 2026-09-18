@@ -42,7 +42,7 @@ jobs:
 
             echo "--- Building and Starting My Portfolio ---"
             
-            docker compose -f .docker/docker-compose.yml up -d --build
+            docker-compose -f .docker/docker-compose.yml up -d --build
             docker image prune -f
 
             echo "--- My Portfolio Deployment Complete ---"
