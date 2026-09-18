@@ -1,20 +1,21 @@
 name: Deploy My Portfolio
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - Build My Portfolio
+    types:
+      - completed
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.5
+
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
@@ -29,10 +30,12 @@ jobs:
             cd ~/myapps/my-portfolio
 
             echo "--- Updating Repository ---"
+
             git fetch origin main
             git reset --hard origin/main
 
             echo "--- Building and Starting My Portfolio ---"
+
             export DOCKER_BUILDKIT=1
 
             docker compose \
@@ -40,6 +43,7 @@ jobs:
               up -d --build
 
             echo "--- Cleaning Unused Docker Images ---"
+
             docker image prune -f
 
             echo "--- My Portfolio Deployment Complete ---"
