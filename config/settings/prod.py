@@ -4,7 +4,7 @@ from .base import *
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     host.strip() for host in os.environ["ALLOWED_HOSTS"].split(",") if host.strip()
